@@ -31,7 +31,7 @@ jobs:
       run: |
         cd $PACKAGE_NAME
         pip3 install setuptools wheel 
-        pip3 install jupyter_packaging jupyterlab
+        pip3 install jupyter_packaging jupyterlab~=2.0
 
     - name: Build wheel
       run: |
