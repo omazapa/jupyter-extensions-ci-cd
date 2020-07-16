@@ -30,7 +30,8 @@ jobs:
     - name: Install dependencies 
       run: |
         cd $PACKAGE_NAME
-        pip3 install setuptools wheel jupyter_packaging jupyterlab
+        pip install setuptools wheel 
+        pip install jupyter_packaging jupyterlab
 
     - name: Build wheel
       run: |
