@@ -68,6 +68,6 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: SWAN CI/CD pipeline
-        repo: swan-cern/systemuser-image
+        repo: omazapa/systemuser-image
         token: ${{ secrets.SWAN_TOKEN }}
         inputs: '{ "package": "${{env.PACKAGE_NAME}}", "version": "${{env.PACKAGE_VERSION}}" }'
