@@ -70,4 +70,4 @@ jobs:
         workflow: SWAN CI/CD pipeline
         repo: swan-cern/systemuser-image
         token: ${{ secrets.SWAN_TOKEN }}
-        inputs: '{ "package": ${{env.PACKAGE_NAME}}, "version": ${{env.PACKAGE_VERSION}} }'
+        inputs: '{ "package": "${{env.PACKAGE_NAME}}", "version": "${{env.PACKAGE_VERSION}}" }'
