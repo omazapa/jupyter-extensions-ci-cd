@@ -1,5 +1,5 @@
 {
-  "name": "@swan-cern/hdfsbrowser",
+  "name": "@swan_test/hdfsbrowser",
   "version": "v0.1.4",
   "description": "Jupyterlab extension to browse HDFS filesystem",
   "keywords": [
