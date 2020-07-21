@@ -79,4 +79,4 @@ jobs:
         repo: omazapa/systemuser-image
         token: ${{ secrets.PERSONAL_TOKEN }}
         ref: master
-        inputs: "{\"description\":\"test\"}"
+        inputs: ""
