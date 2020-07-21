@@ -34,13 +34,15 @@ jobs:
         echo ::set-env name=PACKAGE_TAG::${GITHUB_REF#refs/*/}
         echo ::set-env name=PACKAGE_NAME::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
         echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
-        echo ::set-env name=PACKAGE_JSON_INPUTS::$(echo '{"PACKAGE":"'"$PACKAGE_NAME"'","VERSION":"'"$PACKAGE_VERSION"'","targetlocation":"'"$TARGET_LOCATION"'"}')
         echo $PACKAGE_JSON_INPUTS
 
     - name: Environnment package name  and version
       run: |
-        echo $PACKAGE_JSON_INPUTS
+      echo ::set-env name=PACKAGE_JSON_INPUTS::$(echo '{"PACKAGE":"'"$PACKAGE_NAME"'","VERSION":"'"$PACKAGE_VERSION"'","targetlocation":"'"$TARGET_LOCATION"'"}')
 
+    - name: Print JSON
+      run: |
+        echo $PACKAGE_JSON_INPUTS
     - name: Install dependencies 
       run: |
         cd $PACKAGE_NAME
