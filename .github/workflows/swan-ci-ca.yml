@@ -79,5 +79,5 @@ jobs:
         repo: omazapa/systemuser-image
         token: ${{ secrets.PERSONAL_TOKEN }}
         ref: master
-        inputs: '{ "version" : "${{ env.PACKAGE_VERSION }}" } }'
+        inputs: '{ "version" : "${{ env.PACKAGE_VERSION }}" }'
             
