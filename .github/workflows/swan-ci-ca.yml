@@ -71,4 +71,4 @@ jobs:
         repo: omazapa/systemuser-image
         token: ${{ secrets.PERSONAL_TOKEN }}
         ref: master
-        inputs: '{"msg":"hello"}'
+        inputs: '{ "message": "blah blah", "debug": true }'
