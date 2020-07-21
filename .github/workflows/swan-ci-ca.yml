@@ -34,6 +34,7 @@ jobs:
         echo ::set-env name=PACKAGE_TAG::${GITHUB_REF#refs/*/}
         echo ::set-env name=PACKAGE_NAME::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
         echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
+        echo ::set-env name=PACKAGE_JSON_INPUTS::$(echo '{"PACKAGE":"'"$PACKAGE_NAME"'","VERSION":"'"$PACKAGE_VERSION"'","targetlocation":"'"$TARGET_LOCATION"'"}')
 
     - name: Install dependencies 
       run: |
@@ -66,11 +67,9 @@ jobs:
 
     - name: Invoke workflow in systemuser-image
       uses: benc-uk/workflow-dispatch@v1
-      run: |
-        echo ::set-env name=JSON_INPUTS::$(echo '{"PACKAGE":"'"$PACKAGE_NAME"'","VERSION":"'"$PACKAGE_VERSION"'","targetlocation":"'"$TARGET_LOCATION"'"}')
       with:
         workflow: SWAN CI/CD pipeline
         repo: omazapa/systemuser-image
         token: ${{ secrets.PERSONAL_TOKEN }}
         ref: master
-        inputs: ${{env.JSON_INPUTS}}
+        inputs: ${{env.PACKAGE_JSON_INPUTS}}
