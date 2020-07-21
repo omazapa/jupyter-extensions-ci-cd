@@ -69,4 +69,5 @@ jobs:
       with:
         workflow: SWAN CI/CD pipeline
         repo: omazapa/systemuser-image
+        token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{ "package": "${{env.PACKAGE_NAME}}", "version": "${{env.PACKAGE_VERSION}}" }'
