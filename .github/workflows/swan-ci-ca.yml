@@ -38,7 +38,7 @@ jobs:
 
     - name: Environnment package name  and version
       run: |
-        echo ::set-env name=PACKAGE_JSON_INPUTS::$(echo '{"PACKAGE":"'"$PACKAGE_NAME"'","VERSION":"'"$PACKAGE_VERSION"'","targetlocation":"'"$TARGET_LOCATION"'"}')
+        echo ::set-env name=PACKAGE_JSON_INPUTS::$(echo '{"pkg":"'"$PACKAGE_NAME"'","version":"'"$PACKAGE_VERSION"'","targetlocation":"'"$TARGET_LOCATION"'"}')
 
     - name: Print JSON
       run: |
