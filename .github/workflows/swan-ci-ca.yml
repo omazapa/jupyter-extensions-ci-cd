@@ -70,4 +70,3 @@ jobs:
         workflow: SWAN CI/CD pipeline
         repo: omazapa/systemuser-image
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{ "message": "blah blah", "debug": true }'
