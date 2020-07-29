@@ -19,12 +19,12 @@ jobs:
 
     - name: Set environnment package name  and version
       run: |
-        echo ::set-env name=PACKAGE_TAG::${GITHUB_REF#refs/*/}
-        echo ::set-env name=PACKAGE_NAME::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
-        echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
-        echo ${{env.PACKAGE_NAME}}
-        echo $PACKAGE_NAME
         PACKAGE_NAME=$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
+
+        echo ::set-env name=PACKAGE_TAG::${GITHUB_REF#refs/*/}
+        echo ::set-env name=PACKAGE_NAME::$PACKAGE_NAME
+        echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
+        cd $PACKAGE_NAME
         if test -f 'package.json'; then 
           echo ::set-env name=PACKAGE_JSON::$(echo 1)
         fi 
@@ -53,12 +53,12 @@ jobs:
     - name: Install dependencies 
       run: |
         cd $PACKAGE_NAME
-        #pip install setuptools wheel twine jupyter_packaging jupyterlab~=2.0
+        pip install setuptools wheel twine jupyter_packaging jupyterlab~=2.0
 
     - name: Build wheel
       run: |
         cd $PACKAGE_NAME
-        #python setup.py sdist bdist_wheel
+        python setup.py sdist bdist_wheel
 
     - name: Publish distribution to PyPI
       env:
@@ -66,7 +66,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
       run: |
         cd $PACKAGE_NAME
-        #twine upload --repository testpypi dist/*
+        twine upload --repository testpypi dist/*
 
     - name: Publish distribution to NPM
       if: ${{env.PACKAGE_JSON}}
@@ -80,18 +80,18 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-#    - name: Create Release
-#      id: create_release
-#      uses: actions/create-release@v1
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      with:
-#        tag_name: ${{ github.ref }}
-#        release_name: Release ${{ github.ref }}
-#        body: |
-#          ${{github.event.head_commit.message}}
-#        draft: false
-#        prerelease: false
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          ${{github.event.head_commit.message}}
+        draft: false
+        prerelease: false
 
 #    - name: Invoke workflow in systemuser-image
 #      uses: benc-uk/workflow-dispatch@v1
