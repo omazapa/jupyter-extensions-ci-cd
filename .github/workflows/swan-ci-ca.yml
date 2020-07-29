@@ -55,8 +55,8 @@ jobs:
 
     - name: Publish distribution to NPM
       run: |
-      cd $PACKAGE_NAME
-      if [ -f "./package.json" ]; then
+        cd $PACKAGE_NAME
+        if [ -f "./package.json" ]; then
           NPM_PKG_NAME=$(echo $PACKAGE_NAME | tr "[:upper:]" "[:lower:]")
           NPM_PKG_VERSION=$(echo $PACKAGE_VERSION | sed -e 's/v//g')
           NPM_PKG_PATH=build/lib/$NPM_PKG_NAME/labextension/swan_test-$NPM_PKG_NAME-$NPM_PKG_VERSION.tgz
