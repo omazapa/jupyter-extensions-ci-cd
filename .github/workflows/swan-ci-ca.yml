@@ -24,10 +24,11 @@ jobs:
         echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
         cd `echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1`
         if test -f 'package.json'; then 
-          echo ::set-env name=PACKAGE_JSON::$(true)
+          echo ::set-env name=PACKAGE_JSON::$(echo 1)
         else
-          echo ::set-env name=PACKAGE_JSON::$(false)
+          echo ::set-env name=PACKAGE_JSON::$(echo 0)
         fi 
+        ls
     - name: Install Python
       uses: actions/setup-python@v1
       with:
