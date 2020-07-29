@@ -76,7 +76,7 @@ jobs:
         NPM_PKG_VERSION=$(echo $PACKAGE_VERSION | sed -e 's/v//g')
         NPM_PKG_PATH=build/lib/$NPM_PKG_NAME/labextension/swan_test-$NPM_PKG_NAME-$NPM_PKG_VERSION.tgz
         echo $NPM_PKG_PATH
-        #npm publish $NPM_PKG_PATH --access public
+        npm publish $NPM_PKG_PATH --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
