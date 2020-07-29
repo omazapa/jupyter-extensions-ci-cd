@@ -17,23 +17,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Set environnment package name  and version
+      run: |
+        echo ::set-env name=PACKAGE_TAG::${GITHUB_REF#refs/*/}
+        echo ::set-env name=PACKAGE_NAME::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
+        echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
+        cd `echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1`
+        echo ::set-env name=PACKAGE_JSON::$(test -f "./package.json")
+
     - name: Install Python
       uses: actions/setup-python@v1
       with:
         python-version: '3.x'
 
     - name: Install node
+      if: ${{env.PACKAGE_JSON}}
       uses: actions/setup-node@v1
       with:
         always-auth: true
         node-version: '12.x'
         registry-url: https://registry.npmjs.org
    
-    - name: Set environnment package name  and version
-      run: |
-        echo ::set-env name=PACKAGE_TAG::${GITHUB_REF#refs/*/}
-        echo ::set-env name=PACKAGE_NAME::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
-        echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
 
     - name: Install dependencies 
       run: |
@@ -54,15 +58,14 @@ jobs:
         twine upload --repository testpypi dist/*
 
     - name: Publish distribution to NPM
+      if: ${{env.PACKAGE_JSON}}
       run: |
         cd $PACKAGE_NAME
-        if [ -f "./package.json" ]; then
-          NPM_PKG_NAME=$(echo $PACKAGE_NAME | tr "[:upper:]" "[:lower:]")
-          NPM_PKG_VERSION=$(echo $PACKAGE_VERSION | sed -e 's/v//g')
-          NPM_PKG_PATH=build/lib/$NPM_PKG_NAME/labextension/swan_test-$NPM_PKG_NAME-$NPM_PKG_VERSION.tgz
-          echo $NPM_PKG_PATH
-          npm publish $NPM_PKG_PATH --access public
-        fi
+        NPM_PKG_NAME=$(echo $PACKAGE_NAME | tr "[:upper:]" "[:lower:]")
+        NPM_PKG_VERSION=$(echo $PACKAGE_VERSION | sed -e 's/v//g')
+        NPM_PKG_PATH=build/lib/$NPM_PKG_NAME/labextension/swan_test-$NPM_PKG_NAME-$NPM_PKG_VERSION.tgz
+        echo $NPM_PKG_PATH
+        npm publish $NPM_PKG_PATH --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
