@@ -22,11 +22,11 @@ jobs:
         echo ::set-env name=PACKAGE_TAG::${GITHUB_REF#refs/*/}
         echo ::set-env name=PACKAGE_NAME::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
         echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
-        cd ${{env.PACKAGE_NAME}}
+        cd $PACKAGE_NAME
         if test -f 'package.json'; then 
           echo ::set-env name=PACKAGE_JSON::$(echo 1)
         fi 
-        if [ "${{env.PACKAGE_NAME}}" == "SparkMonitor" ]; then 
+        if [ "$PACKAGE_NAME" == "SparkMonitor" ]; then 
           echo ::set-env name=PACKAGE_JAVA::$(echo 1)
         fi
     - name: Install Python
