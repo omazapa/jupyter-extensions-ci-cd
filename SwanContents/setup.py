@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='swancontents',
-      version='0.0.7',
+      version='0.0.8',
       description='Jupyter Notebook filesystem with Projects',
       include_package_data=True,
       packages=find_packages(),
