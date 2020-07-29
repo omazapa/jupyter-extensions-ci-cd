@@ -22,7 +22,7 @@ jobs:
         echo ::set-env name=PACKAGE_TAG::${GITHUB_REF#refs/*/}
         echo ::set-env name=PACKAGE_NAME::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
         echo ::set-env name=PACKAGE_VERSION::$(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 2)
-        cd `echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1`
+        cd $(echo  ${GITHUB_REF#refs/*/} | cut -d / -f 1)
         echo ::set-env name=PACKAGE_JSON::$(test -f "./package.json")
 
     - name: Install Python
