@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='sparkmonitor',
-      version='0.0.4',
+      version='0.0.5',
       description='Spark Monitor Extension for Jupyter Notebook',
       author='Krishnan R',
       author_email='krishnanr1997@gmail.com',
