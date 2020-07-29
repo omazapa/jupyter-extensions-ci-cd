@@ -1,6 +1,6 @@
 {
   "name": "hdfsbrowser-nbextension",
-  "version": "v0.1.25",
+  "version": "v0.1.26",
   "description": "Jupyter Notebook extension to browse HDFS filesystem",
   "keywords": [
     "Jupyter",
