@@ -1,6 +1,6 @@
 {
   "name": "@swan_test/sparkmonitor-js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Jupyter Notebook extension to monitor Apache Spark Jobs",
   "keywords": [
     "Jupyter",
