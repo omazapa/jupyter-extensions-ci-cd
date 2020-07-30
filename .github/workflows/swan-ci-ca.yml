@@ -59,6 +59,9 @@ jobs:
       run: |
         cd $PACKAGE_NAME
         python setup.py sdist bdist_wheel
+        if [ "$PACKAGE_JAVA" == "1" ];then
+          make
+        fi
 
     - name: Publish distribution to PyPI
       env:
