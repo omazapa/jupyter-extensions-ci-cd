@@ -107,11 +107,11 @@ jobs:
           ${{github.event.head_commit.message}}
         draft: false
         prerelease: false
+    - run: |
+        git checkout master
 
     - name: Invoke workflow in systemuser-image
       uses: benc-uk/workflow-dispatch@v1
-      run: |
-        git checkout master
       with:
         workflow: SWAN CI/CD pipeline
         repo: omazapa/systemuser-image
