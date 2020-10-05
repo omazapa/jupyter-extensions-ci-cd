@@ -107,9 +107,9 @@ jobs:
           ${{github.event.head_commit.message}}
         draft: false
         prerelease: false
-    - run: |
-        git checkout master
-
+    - uses: actions/checkout@v2
+        with:
+          ref: 'master'
     - name: Invoke workflow in systemuser-image
       uses: benc-uk/workflow-dispatch@v1
       with:
