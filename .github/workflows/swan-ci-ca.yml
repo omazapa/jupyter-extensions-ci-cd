@@ -111,6 +111,7 @@ jobs:
     - name: Invoke workflow in systemuser-image
       uses: benc-uk/workflow-dispatch@v1
       with:
+        ref: 'master'
         workflow: SWAN_CI_CD_pipeline
         repo: omazapa/systemuser-image
         token: ${{ secrets.PERSONAL_TOKEN }}
