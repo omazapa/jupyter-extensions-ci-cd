@@ -95,14 +95,6 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    - name: Invoke workflow in systemuser-image
-      uses: benc-uk/workflow-dispatch@v1
-      with:
-        workflow: SWAN_CI_CD_pipeline
-        repo: omazapa/systemuser-image
-        token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{ "package": "${{env.PACKAGE_NAME}}", "version": "${{env.PACKAGE_VERSION}}" }'
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -116,3 +108,10 @@ jobs:
         draft: false
         prerelease: false
 
+    - name: Invoke workflow in systemuser-image
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: SWAN_CI_CD_pipeline
+        repo: omazapa/systemuser-image
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{ "package_name": "${{env.PACKAGE_NAME}}", "package_version": "${{env.PACKAGE_VERSION}}" }'
