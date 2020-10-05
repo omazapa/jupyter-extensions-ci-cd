@@ -58,12 +58,12 @@ jobs:
 
     - name: Install dependencies 
       run: |
-        cd $PACKAGE_NAME
+        #cd $PACKAGE_NAME
         #pip install setuptools wheel twine jupyter_packaging jupyterlab~=2.0
 
     - name: Build wheel
       run: |
-        cd $PACKAGE_NAME
+        #cd $PACKAGE_NAME
         #python setup.py sdist bdist_wheel
 
     - name: Publish distribution to PyPI
@@ -71,13 +71,13 @@ jobs:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
       run: |
-        cd $PACKAGE_NAME
+        #cd $PACKAGE_NAME
         #twine upload --repository pypi dist/*
 
     - name: Publish distribution to NPM
       if: ${{env.PUBLISH_NPM}}
       run: |
-        cd $PACKAGE_NAME
+        #cd $PACKAGE_NAME
 
         #The next variables are requried to build the path to the pre-created npm package
         #the package is already created by setup.py and it's not required to build it again.
@@ -108,11 +108,11 @@ jobs:
         draft: false
         prerelease: false
 
+        
     - name: Invoke workflow in systemuser-image
       uses: benc-uk/workflow-dispatch@v1
       with:
-        ref: 'master'
-        workflow: SWAN_CI_CD_pipeline
+        workflow: SWAN CI/CD pipeline
         repo: omazapa/systemuser-image
-        token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{ "package_name": "test", "package_version": "test" }'
+        token: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
+        inputs: '{ "package": "${{env.PACKAGE_NAME}}", "version": "${{env.PACKAGE_VERSION}}" }'
