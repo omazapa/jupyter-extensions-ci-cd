@@ -58,26 +58,26 @@ jobs:
 
     - name: Install dependencies 
       run: |
-        cd $PACKAGE_NAME
-        pip install setuptools wheel twine jupyter_packaging jupyterlab~=2.0
+        #cd $PACKAGE_NAME
+        #pip install setuptools wheel twine jupyter_packaging jupyterlab~=2.0
 
     - name: Build wheel
       run: |
-        cd $PACKAGE_NAME
-        python setup.py sdist bdist_wheel
+        #cd $PACKAGE_NAME
+        #python setup.py sdist bdist_wheel
 
     - name: Publish distribution to PyPI
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
       run: |
-        cd $PACKAGE_NAME
-        twine upload --repository pypi dist/*
+        #cd $PACKAGE_NAME
+        #twine upload --repository pypi dist/*
 
     - name: Publish distribution to NPM
       if: ${{env.PUBLISH_NPM}}
       run: |
-        cd $PACKAGE_NAME
+        #cd $PACKAGE_NAME
 
         #The next variables are requried to build the path to the pre-created npm package
         #the package is already created by setup.py and it's not required to build it again.
@@ -91,7 +91,7 @@ jobs:
         #Full path with package name, version and organization
         NPM_PKG_PATH=build/lib/$NPM_PKG_NAME/labextension/swan-cern-$NPM_PKG_NAME-$NPM_PKG_VERSION.tgz
 
-        npm publish $NPM_PKG_PATH --access public --dry-run
+        #npm publish $NPM_PKG_PATH --access public --dry-run
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
