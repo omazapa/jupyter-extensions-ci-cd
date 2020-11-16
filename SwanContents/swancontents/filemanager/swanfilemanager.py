@@ -84,6 +84,10 @@ class SwanFileManager(SwanFileManagerMixin, LargeFileManager):
 
         if parent_project and not parent_project == 'invalid':
             model['project'] = parent_project
+            model['is_project'] = True
+        else:
+            model['is_project'] = False
+
 
         return model
 
@@ -105,7 +109,8 @@ class SwanFileManager(SwanFileManagerMixin, LargeFileManager):
             raise web.HTTPError(404, four_o_four)
 
         model = self._base_model(path)
-        model['type'] = 'project'
+        model['type'] = 'directory'
+        model['is_project'] = True
         if content:
             model['content'] = contents = []
             os_dir = self._get_os_path(path)
@@ -175,7 +180,7 @@ class SwanFileManager(SwanFileManagerMixin, LargeFileManager):
         os_path_proj = self._get_os_path(path + '/' + self.swan_default_file)
 
         if os.path.isdir(os_path) and os.path.isfile(os_path_proj):
-            if type not in (None, 'project', 'directory'):
+            if type not in (None, 'directory'):
                 raise web.HTTPError(400,
                                 u'%s is a project, not a %s' % (path, type), reason='bad type')
 
@@ -194,7 +199,7 @@ class SwanFileManager(SwanFileManagerMixin, LargeFileManager):
 
         if 'type' not in model:
             raise web.HTTPError(400, u'No file type provided')
-        if 'content' not in model and model['type'] != 'directory' and model['type'] != 'project':
+        if 'content' not in model and model['type'] != 'directory' and model['is_project'] != True:
             raise web.HTTPError(400, u'No file content provided')
 
         path = path.strip('/')
@@ -207,7 +212,7 @@ class SwanFileManager(SwanFileManagerMixin, LargeFileManager):
         self.run_pre_save_hook(model=model, path=path)
 
         try:
-            if model['type'] == 'project':
+            if model['type'] == 'directory' and model['is_project'] == True:
                 if not self._is_swan_root_folder(os_path):
                     raise web.HTTPError(400, "You can only create projects inside Swan Projects")
                 self._save_project(os_path, model, path)
@@ -267,7 +272,7 @@ class SwanFileManager(SwanFileManagerMixin, LargeFileManager):
         # no content, not a directory, so fill out new-file model
         if 'content' not in model \
                 and model['type'] != 'directory' \
-                and model['type'] != 'project':
+                and model['is_project'] != True:
             if model['type'] == 'notebook':
                 model['content'] = new_notebook()
                 model['format'] = 'json'
@@ -304,7 +309,7 @@ class SwanFileManager(SwanFileManagerMixin, LargeFileManager):
             untitled = self.untitled_directory
             insert = ' '
 
-        elif model['type'] == 'project':
+        elif model['type'] == 'directory' and model['is_project'] == True :
             untitled = self.untitled_project
             insert = ' '
 
