@@ -249,7 +249,9 @@ define([
         item.find(".item_name").text(model.name);
         item.find(".item_name").attr('title', model.name);
         var icon = null;
-        if(model.is_project)
+        if(model.is_project && !model.project)
+        //this means I am project, but I am not setting the icon if I am in a folder inside the project
+        // because model.project is only defined in folders inside the project
         {
             icon = parent_notebook_list.icons['project'];
         }else
