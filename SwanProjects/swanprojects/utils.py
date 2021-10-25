@@ -53,8 +53,6 @@ class SwanUtils(Configurable):
         path: str || None
             The path to the project or None if not project found
         """
-        if not path.startswith(os.sep):
-            path = os.sep + path  # initial '/' is required by swanconents otherwise it is invalid
         path = self.contents_manager._get_project_path(path)
         print(f"get_project_path = {path}")
         if path == 'invalid':
