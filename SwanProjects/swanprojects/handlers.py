@@ -70,8 +70,10 @@ class ProjectInfoHandler(SwanAPIHandler):
 
         project = self.swan_utils.get_project_path(path)
         project_data = {}
+        self.log.info(f"project {project} ")
         if project is not None:
             project_data = self.swan_utils.get_project_info(project)
+            self.log.info(f"project data {project_data} ")
 
             project_data["name"] = project.split(os.path.sep)[-1]
             project_data["user_script"] = self.swan_utils.get_user_script_content(
