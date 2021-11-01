@@ -120,11 +120,19 @@ class SwanKernelSpecManager(KernelSpecManager):
         res = {}
         for name, resource_dir in self.find_kernel_specs().items():
             try:
+                kernel_path = self._find_spec_directory(name)
+                self.log.info(f"kernel: {name} path: {kernel_path}")
+                if "/scratch/" in kernel_path:
+                    continue
                 spec = self.get_kernel_spec(name)
                 res[name] = {'resource_dir': resource_dir,
                              'spec': spec.to_dict()}
             except NoSuchKernel:
                 self.log.warning(
                     "Error loading kernelspec %r", name, exc_info=True)
-        self.log.info(f"all specs: {res}")
+        ## Implenting something similar to avoid unwanted kernels for some stacks ex: fcc
+        # https://github.com/Anaconda-Platform/nb_conda_kernels/blob/master/nb_conda_kernels/manager.py#L287
+        #
+
+        #self.log.info(f"all specs: {res}")
         return res
