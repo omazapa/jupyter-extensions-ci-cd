@@ -70,12 +70,12 @@ class SwanKernelSpecManager(KernelSpecManager):
                         if not self.swan_utils.contents_manager.dir_exists(kerne_dir):
                             self.save_native_spec(
                                 kerne_dir, self.project_info[python]["path"], "Python " + version)
-                self.kernel_dirs.append(local_kernels)
-                self.log.debug(f"KERNEL DIRS = {self.kernel_dirs}")
-                self.log.debug(f"specs:\n {self.get_all_specs()}")
+                self.kernel_dirs.append(os.path.join(self.swan_utils.contents_manager.root_dir,local_kernels))
+                self.log.info(f"KERNEL DIRS = {self.kernel_dirs}")
+                self.log.info(f"specs:\n {self.get_all_specs()}")
                 return True
             else:
-                self.log.debug(
+                self.log.info(
                     f"Error setting kernel paths, project {self.project_name} corrupted.")
                 self.kernel_dirs = []
                 return False
@@ -126,4 +126,5 @@ class SwanKernelSpecManager(KernelSpecManager):
             except NoSuchKernel:
                 self.log.warning(
                     "Error loading kernelspec %r", name, exc_info=True)
+        self.log.info(f"all specs: {res}")
         return res
